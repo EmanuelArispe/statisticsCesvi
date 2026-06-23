@@ -12,13 +12,35 @@ import java.time.Duration;
 
 public class Management {
 
-    private static final String CHK_ASEGURADO    = "chkAseguradoList_0";
-    private static final String CHK_TERCERO      = "chkAseguradoList_1";
-    private static final String CHK_NORMAL       = "chkResultadoPeritacionList_0";
-    private static final String CHK_PPT          = "chkResultadoPeritacionList_1";
-    private static final String CHK_PTE          = "chkResultadoPeritacionList_2";
-    private static final String AMPLIACION_VALUE = "1";
-    private static final String SIN_AMPLIACION_VALUE = "0";
+    private static final String CHK_ASEGURADO           = "chkAseguradoList_0";
+    private static final String CHK_TERCERO             = "chkAseguradoList_1";
+
+    // CHECK TIPO INFORME
+    private static final String CHK_NORMAL              = "chkResultadoPeritacionList_0";
+    private static final String CHK_PPT                 = "chkResultadoPeritacionList_1";
+    private static final String CHK_PTE                 = "chkResultadoPeritacionList_2";
+
+    // CHECK TIPO VEHICULO
+    private static final String CHK_AUTO                = "chkTipoVehiculoList_0";
+    private static final String CHK_CAMION              = "chkTipoVehiculoList_1";
+    private static final String CHK_MOTO                = "chkTipoVehiculoList_2";
+
+    // CHECK TIPO PERITACION
+    private static final String CHK_SIN_TIPO                = "chkTipoPeritacionList_10";
+    private static final String CHK_ROTURA_CRISTAL          = "chkTipoPeritacionList_0";
+    private static final String CHK_ROBO_AP                 = "chkTipoPeritacionList_1"; // Roba aparecido
+    private static final String CHK_ROBO_PAR                = "chkTipoPeritacionList_2"; // Robo parcial
+    private static final String CHK_ROBO_RUE                = "chkTipoPeritacionList_3"; // Robo Rueda
+    private static final String CHK_INCENDIO                = "chkTipoPeritacionList_4";
+    private static final String CHK_PERIT_FOTO              = "chkTipoPeritacionList_5";
+    private static final String CHK_GRANIZO                 = "chkTipoPeritacionList_6";
+    private static final String CHK_INUNDACION              = "chkTipoPeritacionList_7";
+    private static final String CHK_ORDEN_RAPI              = "chkTipoPeritacionList_8";
+    private static final String CHK_PERIT_REMOTA            = "chkTipoPeritacionList_9";
+
+    // CON O SIN AMPLIACION
+    private static final String AMPLIACION_VALUE        = "1";
+    private static final String SIN_AMPLIACION_VALUE    = "0";
 
     public void managementDownload(WebDriver driver, String startDate, String endDate) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -28,11 +50,8 @@ public class Management {
         loadCity(driver);
         loadStartDate(driver, wait, startDate);
         loadEndDate(driver, wait, endDate);
-        clickCheckbox(driver, wait, CHK_ASEGURADO);
-        clickCheckbox(driver, wait, CHK_TERCERO);
-        clickCheckbox(driver, wait, CHK_NORMAL);
-        clickCheckbox(driver, wait, CHK_PPT);
-        clickCheckbox(driver, wait, CHK_PTE);
+        clickCheckBox(driver, wait, CHK_ASEGURADO);
+
         loadAmpliacion(driver, wait, AMPLIACION_VALUE);
         //loadAmpliacion(driver, wait, SIN_AMPLIACION_VALUE);
     }
@@ -108,7 +127,7 @@ public class Management {
         dateElement.sendKeys(endDate);
     }
 
-    private void clickCheckbox(WebDriver driver, WebDriverWait wait, String id) {
+    private void clickCheckBox(WebDriver driver, WebDriverWait wait, String id) {
         WebElement checkbox = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.id(id))
         );
@@ -128,25 +147,3 @@ public class Management {
     }
 
 }
-    /*
-    driver.findElement(By.id("MainContent_ddlAmpliacion")).click();
-    {
-      WebElement dropdown = driver.findElement(By.id("MainContent_ddlAmpliacion"));
-      dropdown.findElement(By.xpath("//option[. = 'Sin Ampliación']")).click();
-    }
-    driver.findElement(By.cssSelector("#MainContent_ddlAmpliacion > option:nth-child(3)")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_0")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_1")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_2")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_3")).click();
-    driver.findElement(By.cssSelector("#chkTipoPeritacionList td:nth-child(5)")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_4")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_5")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_6")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_7")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_8")).click();
-    driver.findElement(By.id("btnBuscar")).click();
-
-    driver.findElement(By.id("btnExportarExcelBusqueda")).click();
-  }
-        */
