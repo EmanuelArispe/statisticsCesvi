@@ -1,6 +1,7 @@
 package com.statisticsCesvi;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,39 +14,43 @@ public class Management {
 
     public void managementDownload(WebDriver driver,String startDate, String endDate) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        loadPersonal(wait);
-        loadGroup(wait);
-        loadProvincia(wait);
+        loadPersonal(driver, wait);
+        loadGroup(driver, wait);
+        loadProvincia(driver, wait);
         loadCity(driver);
-        loadStartDate(wait,startDate);
-        loadEndDate(wait,endDate);
-        loadAsegurado(wait);
-        loadTercero(wait);
+        loadStartDate(driver, wait, startDate);
+        loadEndDate(driver, wait, endDate);
+        loadAsegurado(driver, wait);
+        loadTercero(driver, wait);
     }
 
-    private void loadPersonal(WebDriverWait wait) {
+    private void scrollTo(WebDriver driver, WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth', block:'center'});", element);
+    }
+
+    private void loadPersonal(WebDriver driver, WebDriverWait wait) {
         WebElement peritosElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.id("lstPeritos"))
         );
-
+        scrollTo(driver, peritosElement);
         Select peritos = new Select(peritosElement);
         peritos.selectByVisibleText("ARISPE EMANUEL");
     }
 
-    private void loadGroup(WebDriverWait wait) {
+    private void loadGroup(WebDriver driver, WebDriverWait wait) {
         WebElement grupoElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.id("lstGrupoPeritos"))
         );
-
+        scrollTo(driver, grupoElement);
         Select grupos = new Select(grupoElement);
         grupos.selectByVisibleText("Zona10-Chiappanni");
     }
 
-    private void loadProvincia(WebDriverWait wait) {
+    private void loadProvincia(WebDriver driver, WebDriverWait wait) {
         WebElement provinciaElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.id("ddlProvincia"))
         );
-
+        scrollTo(driver, provinciaElement);
         Select provincia = new Select(provinciaElement);
         provincia.selectByVisibleText("Buenos Aires");
     }
@@ -67,40 +72,47 @@ public class Management {
         WebElement localidadElement = waitLocalidad.until(
                 ExpectedConditions.presenceOfElementLocated(By.id("ddlLocalidad"))
         );
+        scrollTo(driver, localidadElement);
         Select localidad = new Select(localidadElement);
         localidad.selectByVisibleText("Tandil");
     }
 
-    private void loadStartDate(WebDriverWait wait, String startDate) {
+    private void loadStartDate(WebDriver driver, WebDriverWait wait, String startDate) {
         WebElement dateElement = wait.until(
                 ExpectedConditions.elementToBeClickable(By.id("MainContent_txtFechaInformeDesde"))
         );
-
+        scrollTo(driver, dateElement);
         dateElement.clear();
         dateElement.sendKeys(startDate);
     }
 
-    private void loadEndDate(WebDriverWait wait, String endDate) {
+    private void loadEndDate(WebDriver driver, WebDriverWait wait, String endDate) {
         WebElement dateElement = wait.until(
                 ExpectedConditions.elementToBeClickable(By.id("MainContent_txtFechaInformeHasta"))
         );
-
+        scrollTo(driver, dateElement);
         dateElement.clear();
         dateElement.sendKeys(endDate);
     }
 
-    private void loadAsegurado(WebDriverWait wait) {
+    private void loadAsegurado(WebDriver driver, WebDriverWait wait) {
         WebElement checkbox = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.id("chkAseguradoList_0"))
         );
+        scrollTo(driver, checkbox);
+        if (!checkbox.isSelected()) {
             checkbox.click();
+        }
     }
 
-    private void loadTercero(WebDriverWait wait) {
+    private void loadTercero(WebDriver driver, WebDriverWait wait) {
         WebElement checkbox = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.id("chkAseguradoList_1"))
         );
+        scrollTo(driver, checkbox);
+        if (!checkbox.isSelected()) {
             checkbox.click();
+        }
     }
 
 }
