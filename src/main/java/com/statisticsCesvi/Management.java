@@ -11,12 +11,13 @@ import java.time.Duration;
 
 public class Management {
 
-    public void managementDownload(WebDriver driver) {
+    public void managementDownload(WebDriver driver,String startDate, String endDate) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         loadPersonal(wait);
         loadGroup(wait);
         loadProvincia(wait);
         loadCity(driver);
+        loadStartDate(wait,startDate);
     }
 
     private void loadPersonal(WebDriverWait wait) {
@@ -67,9 +68,26 @@ public class Management {
         localidad.selectByVisibleText("Tandil");
     }
 
-  }
+    private void loadStartDate(WebDriverWait wait, String startDate) {
+        WebElement dateElement = wait.until(
+                ExpectedConditions.elementToBeClickable(By.id("MainContent_txtFechaInformeDesde"))
+        );
+
+        dateElement.clear();
+        dateElement.sendKeys(startDate);
+    }
+
+    private void loadEndDate(WebDriverWait wait, String endDate) {
+        WebElement dateElement = wait.until(
+                ExpectedConditions.elementToBeClickable(By.id("MainContent_txtFechaInformeHasta"))
+        );
+
+        dateElement.clear();
+        dateElement.sendKeys(endDate);
+    }
+
+}
     /*
-    driver.findElement(By.cssSelector("#ddlLocalidad > option:nth-child(108)")).click();
     driver.findElement(By.id("MainContent_txtFechaInformeDesde")).click();
     driver.findElement(By.id("MainContent_txtFechaInformeHasta")).click();
     driver.findElement(By.id("MainContent_ddlAmpliacion")).click();
