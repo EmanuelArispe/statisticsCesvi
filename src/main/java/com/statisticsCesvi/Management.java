@@ -18,6 +18,9 @@ public class Management {
         loadProvincia(wait);
         loadCity(driver);
         loadStartDate(wait,startDate);
+        loadEndDate(wait,endDate);
+        loadAsegurado(wait);
+        loadTercero(wait);
     }
 
     private void loadPersonal(WebDriverWait wait) {
@@ -86,10 +89,22 @@ public class Management {
         dateElement.sendKeys(endDate);
     }
 
+    private void loadAsegurado(WebDriverWait wait) {
+        WebElement checkbox = wait.until(
+                ExpectedConditions.presenceOfElementLocated(By.id("chkAseguradoList_0"))
+        );
+            checkbox.click();
+    }
+
+    private void loadTercero(WebDriverWait wait) {
+        WebElement checkbox = wait.until(
+                ExpectedConditions.presenceOfElementLocated(By.id("chkAseguradoList_1"))
+        );
+            checkbox.click();
+    }
+
 }
     /*
-    driver.findElement(By.id("MainContent_txtFechaInformeDesde")).click();
-    driver.findElement(By.id("MainContent_txtFechaInformeHasta")).click();
     driver.findElement(By.id("MainContent_ddlAmpliacion")).click();
     {
       WebElement dropdown = driver.findElement(By.id("MainContent_ddlAmpliacion"));

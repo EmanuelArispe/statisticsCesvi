@@ -2,6 +2,10 @@ package com.statisticsCesvi;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class Login {
 
@@ -20,7 +24,8 @@ public class Login {
   }
 
   public void getManagement(WebDriver driver) {
-    driver.findElement(By.id("imgOrionGestion")).click();
-    driver.findElement(By.id("btnAceptar")).click();
+      WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+      wait.until(ExpectedConditions.elementToBeClickable(By.id("imgOrionGestion"))).click();
+      wait.until(ExpectedConditions.elementToBeClickable(By.id("btnAceptar"))).click();
   }
 }
