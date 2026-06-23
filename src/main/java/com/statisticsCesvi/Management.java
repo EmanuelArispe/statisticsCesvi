@@ -12,7 +12,15 @@ import java.time.Duration;
 
 public class Management {
 
-    public void managementDownload(WebDriver driver,String startDate, String endDate) {
+    private static final String CHK_ASEGURADO    = "chkAseguradoList_0";
+    private static final String CHK_TERCERO      = "chkAseguradoList_1";
+    private static final String CHK_NORMAL       = "chkResultadoPeritacionList_0";
+    private static final String CHK_PPT          = "chkResultadoPeritacionList_1";
+    private static final String CHK_PTE          = "chkResultadoPeritacionList_2";
+    private static final String AMPLIACION_VALUE = "1";
+    private static final String SIN_AMPLIACION_VALUE = "0";
+
+    public void managementDownload(WebDriver driver, String startDate, String endDate) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         loadPersonal(driver, wait);
         loadGroup(driver, wait);
@@ -20,8 +28,13 @@ public class Management {
         loadCity(driver);
         loadStartDate(driver, wait, startDate);
         loadEndDate(driver, wait, endDate);
-        loadAsegurado(driver, wait);
-        loadTercero(driver, wait);
+        clickCheckbox(driver, wait, CHK_ASEGURADO);
+        clickCheckbox(driver, wait, CHK_TERCERO);
+        clickCheckbox(driver, wait, CHK_NORMAL);
+        clickCheckbox(driver, wait, CHK_PPT);
+        clickCheckbox(driver, wait, CHK_PTE);
+        loadAmpliacion(driver, wait, AMPLIACION_VALUE);
+        //loadAmpliacion(driver, wait, SIN_AMPLIACION_VALUE);
     }
 
     private void scrollTo(WebDriver driver, WebElement element) {
@@ -33,8 +46,8 @@ public class Management {
                 ExpectedConditions.presenceOfElementLocated(By.id("lstPeritos"))
         );
         scrollTo(driver, peritosElement);
-        Select peritos = new Select(peritosElement);
-        peritos.selectByVisibleText("ARISPE EMANUEL");
+        Select perito = new Select(peritosElement);
+        perito.selectByVisibleText("ARISPE EMANUEL");
     }
 
     private void loadGroup(WebDriver driver, WebDriverWait wait) {
@@ -95,9 +108,9 @@ public class Management {
         dateElement.sendKeys(endDate);
     }
 
-    private void loadAsegurado(WebDriver driver, WebDriverWait wait) {
+    private void clickCheckbox(WebDriver driver, WebDriverWait wait, String id) {
         WebElement checkbox = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.id("chkAseguradoList_0"))
+                ExpectedConditions.presenceOfElementLocated(By.id(id))
         );
         scrollTo(driver, checkbox);
         if (!checkbox.isSelected()) {
@@ -105,14 +118,13 @@ public class Management {
         }
     }
 
-    private void loadTercero(WebDriver driver, WebDriverWait wait) {
-        WebElement checkbox = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.id("chkAseguradoList_1"))
+    // selecciona por atributo value, más robusto que buscar por texto visible
+    private void loadAmpliacion(WebDriver driver, WebDriverWait wait, String value) {
+        WebElement element = wait.until(
+                ExpectedConditions.presenceOfElementLocated(By.id("MainContent_ddlAmpliacion"))
         );
-        scrollTo(driver, checkbox);
-        if (!checkbox.isSelected()) {
-            checkbox.click();
-        }
+        scrollTo(driver, element);
+        new Select(element).selectByValue(value);
     }
 
 }
