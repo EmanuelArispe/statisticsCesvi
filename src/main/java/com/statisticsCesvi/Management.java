@@ -38,9 +38,14 @@ public class Management {
     private static final String CHK_ORDEN_RAPI              = "chkTipoPeritacionList_8";
     private static final String CHK_PERIT_REMOTA            = "chkTipoPeritacionList_9";
 
-    // CON O SIN AMPLIACION
+    // SELECT AMPLIACION IDs y values
+    private static final String DDL_AMPLIACION          = "MainContent_ddlAmpliacion";
     private static final String AMPLIACION_VALUE        = "1";
     private static final String SIN_AMPLIACION_VALUE    = "0";
+
+    // DATE INPUT IDs
+    private static final String INPUT_FECHA_DESDE       = "MainContent_txtFechaInformeDesde";
+    private static final String INPUT_FECHA_HASTA       = "MainContent_txtFechaInformeHasta";
 
     public void managementDownload(WebDriver driver, String startDate, String endDate) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -48,12 +53,12 @@ public class Management {
         loadGroup(driver, wait);
         loadProvincia(driver, wait);
         loadCity(driver);
-        loadStartDate(driver, wait, startDate);
-        loadEndDate(driver, wait, endDate);
+        fillDateInput(driver, wait, INPUT_FECHA_DESDE, startDate);
+        fillDateInput(driver, wait, INPUT_FECHA_HASTA, endDate);
         clickCheckBox(driver, wait, CHK_ASEGURADO);
 
-        loadAmpliacion(driver, wait, AMPLIACION_VALUE);
-        //loadAmpliacion(driver, wait, SIN_AMPLIACION_VALUE);
+        selectByValue(driver, wait, DDL_AMPLIACION, AMPLIACION_VALUE);
+        //selectByValue(driver, wait, DDL_AMPLIACION, SIN_AMPLIACION_VALUE);
     }
 
     private void scrollTo(WebDriver driver, WebElement element) {
@@ -109,22 +114,13 @@ public class Management {
         localidad.selectByVisibleText("Tandil");
     }
 
-    private void loadStartDate(WebDriver driver, WebDriverWait wait, String startDate) {
+    private void fillDateInput(WebDriver driver, WebDriverWait wait, String id, String value) {
         WebElement dateElement = wait.until(
-                ExpectedConditions.elementToBeClickable(By.id("MainContent_txtFechaInformeDesde"))
+                ExpectedConditions.elementToBeClickable(By.id(id))
         );
         scrollTo(driver, dateElement);
         dateElement.clear();
-        dateElement.sendKeys(startDate);
-    }
-
-    private void loadEndDate(WebDriver driver, WebDriverWait wait, String endDate) {
-        WebElement dateElement = wait.until(
-                ExpectedConditions.elementToBeClickable(By.id("MainContent_txtFechaInformeHasta"))
-        );
-        scrollTo(driver, dateElement);
-        dateElement.clear();
-        dateElement.sendKeys(endDate);
+        dateElement.sendKeys(value);
     }
 
     private void clickCheckBox(WebDriver driver, WebDriverWait wait, String id) {
@@ -138,9 +134,9 @@ public class Management {
     }
 
     // selecciona por atributo value, más robusto que buscar por texto visible
-    private void loadAmpliacion(WebDriver driver, WebDriverWait wait, String value) {
+    private void selectByValue(WebDriver driver, WebDriverWait wait, String id, String value) {
         WebElement element = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.id("MainContent_ddlAmpliacion"))
+                ExpectedConditions.presenceOfElementLocated(By.id(id))
         );
         scrollTo(driver, element);
         new Select(element).selectByValue(value);
