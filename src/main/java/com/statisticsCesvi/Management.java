@@ -56,11 +56,23 @@ public class Management {
     private static final String BTN_BUSCAR              = "btnBuscar";
     private static final String BTN_DESCARGAR           = "btnExportarExcelBusqueda";
 
+    // SELECT visible text values
+    private static final String PERITO_NOMBRE           = "ARISPE EMANUEL";
+    private static final String GRUPO_NOMBRE            = "Zona10-Chiappanni";
+    private static final String PROVINCIA_NOMBRE        = "Buenos Aires";
+
+    // SELECT IDs
+    private static final String DDL_PERITOS             = "lstPeritos";
+    private static final String DDL_GRUPOS              = "lstGrupoPeritos";
+    private static final String DDL_PROVINCIA           = "ddlProvincia";
+    private static final String DDL_LOCALIDAD           = "ddlLocalidad";
+    private static final String CIUDAD_NOMBRE           = "[TODAS]";
+
     public void managementDownload(WebDriver driver, String startDate, String endDate) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        loadPersonal(driver, wait);
-        loadGroup(driver, wait);
-        loadProvincia(driver, wait);
+        selectByText(driver, wait, DDL_PERITOS,   PERITO_NOMBRE);
+        selectByText(driver, wait, DDL_GRUPOS,    GRUPO_NOMBRE);
+        selectByText(driver, wait, DDL_PROVINCIA, PROVINCIA_NOMBRE);
         loadCity(driver);
         fillDateInput(driver, wait, INPUT_FECHA_DESDE, startDate);
         fillDateInput(driver, wait, INPUT_FECHA_HASTA, endDate);
@@ -76,31 +88,12 @@ public class Management {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth', block:'center'});", element);
     }
 
-    private void loadPersonal(WebDriver driver, WebDriverWait wait) {
-        WebElement peritosElement = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.id("lstPeritos"))
+    private void selectByText(WebDriver driver, WebDriverWait wait, String id, String text) {
+        WebElement element = wait.until(
+                ExpectedConditions.presenceOfElementLocated(By.id(id))
         );
-        scrollTo(driver, peritosElement);
-        Select perito = new Select(peritosElement);
-        perito.selectByVisibleText("ARISPE EMANUEL");
-    }
-
-    private void loadGroup(WebDriver driver, WebDriverWait wait) {
-        WebElement grupoElement = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.id("lstGrupoPeritos"))
-        );
-        scrollTo(driver, grupoElement);
-        Select grupos = new Select(grupoElement);
-        grupos.selectByVisibleText("Zona10-Chiappanni");
-    }
-
-    private void loadProvincia(WebDriver driver, WebDriverWait wait) {
-        WebElement provinciaElement = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.id("ddlProvincia"))
-        );
-        scrollTo(driver, provinciaElement);
-        Select provincia = new Select(provinciaElement);
-        provincia.selectByVisibleText("Buenos Aires");
+        scrollTo(driver, element);
+        new Select(element).selectByVisibleText(text);
     }
 
     private void loadCity(WebDriver driver) {
@@ -108,21 +101,20 @@ public class Management {
 
         waitLocalidad.until(driver1 -> {
             Select localidadSelect = new Select(
-                    driver1.findElement(By.id("ddlLocalidad"))
+                    driver1.findElement(By.id(DDL_LOCALIDAD))
             );
 
             return localidadSelect.getOptions()
                     .stream()
                     .anyMatch(option ->
-                            option.getText().trim().equals("Tandil"));
+                            option.getText().trim().equals(CIUDAD_NOMBRE));
         });
 
         WebElement localidadElement = waitLocalidad.until(
-                ExpectedConditions.presenceOfElementLocated(By.id("ddlLocalidad"))
+                ExpectedConditions.presenceOfElementLocated(By.id(DDL_LOCALIDAD))
         );
         scrollTo(driver, localidadElement);
-        Select localidad = new Select(localidadElement);
-        localidad.selectByVisibleText("Tandil");
+        new Select(localidadElement).selectByVisibleText(CIUDAD_NOMBRE);
     }
 
     private void fillDateInput(WebDriver driver, WebDriverWait wait, String id, String value) {
