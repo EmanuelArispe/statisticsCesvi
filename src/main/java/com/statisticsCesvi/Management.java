@@ -43,9 +43,18 @@ public class Management {
     private static final String AMPLIACION_VALUE        = "1";
     private static final String SIN_AMPLIACION_VALUE    = "0";
 
+    // SELECT CLEAS IDs y values
+    private static final String DDL_CLEAS          = "MainContent_ddlPeritacionCleas";
+    private static final String CLEAS_VALUE        = "1";
+    private static final String SIN_CLEAS_VALUE    = "0";
+
     // DATE INPUT IDs
     private static final String INPUT_FECHA_DESDE       = "MainContent_txtFechaInformeDesde";
     private static final String INPUT_FECHA_HASTA       = "MainContent_txtFechaInformeHasta";
+
+    // BUTTON IDs
+    private static final String BTN_BUSCAR              = "btnBuscar";
+    private static final String BTN_DESCARGAR           = "btnExportarExcelBusqueda";
 
     public void managementDownload(WebDriver driver, String startDate, String endDate) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -59,6 +68,8 @@ public class Management {
 
         selectByValue(driver, wait, DDL_AMPLIACION, AMPLIACION_VALUE);
         //selectByValue(driver, wait, DDL_AMPLIACION, SIN_AMPLIACION_VALUE);
+        clickButton(driver, wait, BTN_BUSCAR);
+        clickButton(driver, wait, BTN_DESCARGAR);
     }
 
     private void scrollTo(WebDriver driver, WebElement element) {
@@ -128,9 +139,15 @@ public class Management {
                 ExpectedConditions.presenceOfElementLocated(By.id(id))
         );
         scrollTo(driver, checkbox);
-        if (!checkbox.isSelected()) {
             checkbox.click();
-        }
+    }
+
+    private void clickButton(WebDriver driver, WebDriverWait wait, String id) {
+        WebElement button = wait.until(
+                ExpectedConditions.elementToBeClickable(By.id(id))
+        );
+        scrollTo(driver, button);
+        button.click();
     }
 
     // selecciona por atributo value, más robusto que buscar por texto visible
