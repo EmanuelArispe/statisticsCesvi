@@ -56,31 +56,35 @@ public class Management {
     private static final String BTN_BUSCAR              = "btnBuscar";
     private static final String BTN_DESCARGAR           = "btnExportarExcelBusqueda";
 
-    // SELECT visible text values
+    // TABLE IDs
+    private static final String TABLE_RESULTADOS        = "gvBusquedaPeritacion";
+
+    // SELECT value attributes
     private static final String PERITO_NOMBRE           = "ARISPE EMANUEL";
-    private static final String GRUPO_NOMBRE            = "Zona10-Chiappanni";
-    private static final String PROVINCIA_NOMBRE        = "Buenos Aires";
+    private static final String GRUPO_VALUE             = "3666"; // Zona10-Chiappanni
+    private static final String PROVINCIA_VALUE         = "2"; // Buenos Aires
+    private static final String CIUDAD_VALUE            = "0"; // [Todas]
 
     // SELECT IDs
     private static final String DDL_PERITOS             = "lstPeritos";
     private static final String DDL_GRUPOS              = "lstGrupoPeritos";
     private static final String DDL_PROVINCIA           = "ddlProvincia";
     private static final String DDL_LOCALIDAD           = "ddlLocalidad";
-    private static final String CIUDAD_NOMBRE           = "[TODAS]";
 
     public void managementDownload(WebDriver driver, String startDate, String endDate) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         selectByText(driver, wait, DDL_PERITOS,   PERITO_NOMBRE);
-        selectByText(driver, wait, DDL_GRUPOS,    GRUPO_NOMBRE);
-        selectByText(driver, wait, DDL_PROVINCIA, PROVINCIA_NOMBRE);
+        selectByValue(driver, wait, DDL_GRUPOS,   GRUPO_VALUE);
+        selectByValue(driver, wait, DDL_PROVINCIA, PROVINCIA_VALUE);
         loadCity(driver);
         fillDateInput(driver, wait, INPUT_FECHA_DESDE, startDate);
         fillDateInput(driver, wait, INPUT_FECHA_HASTA, endDate);
-        clickCheckBox(driver, wait, CHK_ASEGURADO);
+        clickCheckBox(driver, wait, CHK_TERCERO);
 
-        selectByValue(driver, wait, DDL_AMPLIACION, AMPLIACION_VALUE);
+        selectByValue(driver, wait, DDL_AMPLIACION, SIN_AMPLIACION_VALUE);
         //selectByValue(driver, wait, DDL_AMPLIACION, SIN_AMPLIACION_VALUE);
         clickButton(driver, wait, BTN_BUSCAR);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(TABLE_RESULTADOS))); // para esperar a que cargue la table y poder descargarla
         clickButton(driver, wait, BTN_DESCARGAR);
     }
 
@@ -107,14 +111,14 @@ public class Management {
             return localidadSelect.getOptions()
                     .stream()
                     .anyMatch(option ->
-                            option.getText().trim().equals(CIUDAD_NOMBRE));
+                            option.getAttribute("value").equals(CIUDAD_VALUE));
         });
 
         WebElement localidadElement = waitLocalidad.until(
                 ExpectedConditions.presenceOfElementLocated(By.id(DDL_LOCALIDAD))
         );
         scrollTo(driver, localidadElement);
-        new Select(localidadElement).selectByVisibleText(CIUDAD_NOMBRE);
+        new Select(localidadElement).selectByValue(CIUDAD_VALUE);
     }
 
     private void fillDateInput(WebDriver driver, WebDriverWait wait, String id, String value) {
