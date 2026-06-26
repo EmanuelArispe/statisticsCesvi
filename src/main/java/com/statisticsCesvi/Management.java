@@ -1,6 +1,7 @@
 package com.statisticsCesvi;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,37 +12,77 @@ import java.time.Duration;
 
 public class Management {
 
-    public void managementDownload(WebDriver driver) {
+    private static final String CHK_ASEGURADO           = "chkAseguradoList_0";
+    private static final String CHK_TERCERO             = "chkAseguradoList_1";
+
+    // CHECK TIPO INFORME
+    private static final String CHK_NORMAL              = "chkResultadoPeritacionList_0";
+    private static final String CHK_PPT                 = "chkResultadoPeritacionList_1";
+    private static final String CHK_PTE                 = "chkResultadoPeritacionList_2";
+
+    // CHECK TIPO VEHICULO
+    private static final String CHK_AUTO                = "chkTipoVehiculoList_0";
+    private static final String CHK_CAMION              = "chkTipoVehiculoList_1";
+    private static final String CHK_MOTO                = "chkTipoVehiculoList_2";
+
+    // CHECK TIPO PERITACION
+    private static final String CHK_SIN_TIPO                = "chkTipoPeritacionList_10";
+    private static final String CHK_ROTURA_CRISTAL          = "chkTipoPeritacionList_0";
+    private static final String CHK_ROBO_AP                 = "chkTipoPeritacionList_1"; // Roba aparecido
+    private static final String CHK_ROBO_PAR                = "chkTipoPeritacionList_2"; // Robo parcial
+    private static final String CHK_ROBO_RUE                = "chkTipoPeritacionList_3"; // Robo Rueda
+    private static final String CHK_INCENDIO                = "chkTipoPeritacionList_4";
+    private static final String CHK_PERIT_FOTO              = "chkTipoPeritacionList_5";
+    private static final String CHK_GRANIZO                 = "chkTipoPeritacionList_6";
+    private static final String CHK_INUNDACION              = "chkTipoPeritacionList_7";
+    private static final String CHK_ORDEN_RAPI              = "chkTipoPeritacionList_8";
+    private static final String CHK_PERIT_REMOTA            = "chkTipoPeritacionList_9";
+
+    // CON O SIN AMPLIACION
+    private static final String AMPLIACION_VALUE        = "1";
+    private static final String SIN_AMPLIACION_VALUE    = "0";
+
+    public void managementDownload(WebDriver driver, String startDate, String endDate) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        loadPersonal(wait);
-        loadGroup(wait);
-        loadProvincia(wait);
+        loadPersonal(driver, wait);
+        loadGroup(driver, wait);
+        loadProvincia(driver, wait);
         loadCity(driver);
+        loadStartDate(driver, wait, startDate);
+        loadEndDate(driver, wait, endDate);
+        clickCheckBox(driver, wait, CHK_ASEGURADO);
+
+        loadAmpliacion(driver, wait, AMPLIACION_VALUE);
+        //loadAmpliacion(driver, wait, SIN_AMPLIACION_VALUE);
     }
 
-    private void loadPersonal(WebDriverWait wait) {
+    private void scrollTo(WebDriver driver, WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth', block:'center'});", element);
+    }
+
+    private void loadPersonal(WebDriver driver, WebDriverWait wait) {
         WebElement peritosElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.id("lstPeritos"))
         );
-
-        Select peritos = new Select(peritosElement);
-        peritos.selectByVisibleText("ARISPE EMANUEL");
+        scrollTo(driver, peritosElement);
+        Select perito = new Select(peritosElement);
+        perito.selectByVisibleText("ARISPE EMANUEL");
     }
 
-    private void loadGroup(WebDriverWait wait) {
+    private void loadGroup(WebDriver driver, WebDriverWait wait) {
         WebElement grupoElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.id("lstGrupoPeritos"))
         );
-
+        scrollTo(driver, grupoElement);
         Select grupos = new Select(grupoElement);
         grupos.selectByVisibleText("Zona10-Chiappanni");
     }
 
-    private void loadProvincia(WebDriverWait wait) {
+    private void loadProvincia(WebDriver driver, WebDriverWait wait) {
         WebElement provinciaElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.id("ddlProvincia"))
         );
-
+        scrollTo(driver, provinciaElement);
         Select provincia = new Select(provinciaElement);
         provincia.selectByVisibleText("Buenos Aires");
     }
@@ -63,33 +104,46 @@ public class Management {
         WebElement localidadElement = waitLocalidad.until(
                 ExpectedConditions.presenceOfElementLocated(By.id("ddlLocalidad"))
         );
+        scrollTo(driver, localidadElement);
         Select localidad = new Select(localidadElement);
         localidad.selectByVisibleText("Tandil");
     }
 
-  }
-    /*
-    driver.findElement(By.cssSelector("#ddlLocalidad > option:nth-child(108)")).click();
-    driver.findElement(By.id("MainContent_txtFechaInformeDesde")).click();
-    driver.findElement(By.id("MainContent_txtFechaInformeHasta")).click();
-    driver.findElement(By.id("MainContent_ddlAmpliacion")).click();
-    {
-      WebElement dropdown = driver.findElement(By.id("MainContent_ddlAmpliacion"));
-      dropdown.findElement(By.xpath("//option[. = 'Sin Ampliación']")).click();
+    private void loadStartDate(WebDriver driver, WebDriverWait wait, String startDate) {
+        WebElement dateElement = wait.until(
+                ExpectedConditions.elementToBeClickable(By.id("MainContent_txtFechaInformeDesde"))
+        );
+        scrollTo(driver, dateElement);
+        dateElement.clear();
+        dateElement.sendKeys(startDate);
     }
-    driver.findElement(By.cssSelector("#MainContent_ddlAmpliacion > option:nth-child(3)")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_0")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_1")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_2")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_3")).click();
-    driver.findElement(By.cssSelector("#chkTipoPeritacionList td:nth-child(5)")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_4")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_5")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_6")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_7")).click();
-    driver.findElement(By.id("chkTipoPeritacionList_8")).click();
-    driver.findElement(By.id("btnBuscar")).click();
 
-    driver.findElement(By.id("btnExportarExcelBusqueda")).click();
-  }
-        */
+    private void loadEndDate(WebDriver driver, WebDriverWait wait, String endDate) {
+        WebElement dateElement = wait.until(
+                ExpectedConditions.elementToBeClickable(By.id("MainContent_txtFechaInformeHasta"))
+        );
+        scrollTo(driver, dateElement);
+        dateElement.clear();
+        dateElement.sendKeys(endDate);
+    }
+
+    private void clickCheckBox(WebDriver driver, WebDriverWait wait, String id) {
+        WebElement checkbox = wait.until(
+                ExpectedConditions.presenceOfElementLocated(By.id(id))
+        );
+        scrollTo(driver, checkbox);
+        if (!checkbox.isSelected()) {
+            checkbox.click();
+        }
+    }
+
+    // selecciona por atributo value, más robusto que buscar por texto visible
+    private void loadAmpliacion(WebDriver driver, WebDriverWait wait, String value) {
+        WebElement element = wait.until(
+                ExpectedConditions.presenceOfElementLocated(By.id("MainContent_ddlAmpliacion"))
+        );
+        scrollTo(driver, element);
+        new Select(element).selectByValue(value);
+    }
+
+}
