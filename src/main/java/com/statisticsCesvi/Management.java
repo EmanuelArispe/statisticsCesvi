@@ -72,14 +72,24 @@ public class Management {
     private static final String DDL_PROVINCIA           = "ddlProvincia";
     private static final String DDL_LOCALIDAD           = "ddlLocalidad";
 
-    public void managementDownload(WebDriver driver, String startDate, String endDate) {
+
+    public void downloadMotoDTAsegMaterial (WebDriver driver, String startDate, String endDate){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        managementGeneralConfig(driver,wait, startDate, endDate);
+        filterMotoDTAsegMaterial(driver,wait);
+    }
+
+    private void managementGeneralConfig(WebDriver driver,WebDriverWait wait, String startDate, String endDate) {
         selectByText(driver, wait, DDL_PERITOS,   PERITO_NOMBRE);
         selectByValue(driver, wait, DDL_GRUPOS,   GRUPO_VALUE);
         selectByValue(driver, wait, DDL_PROVINCIA, PROVINCIA_VALUE);
         loadCity(driver);
         fillDateInput(driver, wait, INPUT_FECHA_DESDE, startDate);
         fillDateInput(driver, wait, INPUT_FECHA_HASTA, endDate);
+    }
+
+    // Filtro Motos, Aseguradas, Danios Materiales y DT
+    private void filterMotoDTAsegMaterial(WebDriver driver,WebDriverWait wait){
         clickCheckBox(driver, wait, CHK_TERCERO);
         clickCheckBox(driver, wait, CHK_PPT);
         clickCheckBox(driver, wait, CHK_NORMAL);

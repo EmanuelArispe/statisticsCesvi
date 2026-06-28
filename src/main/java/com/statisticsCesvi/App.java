@@ -21,7 +21,8 @@ public class App
         login.getManagement(dr.getDriver());
 
         long downloadStarted = System.currentTimeMillis();
-        management.managementDownload(dr.getDriver(), STARTDATE, ENDDATE);
+        management.downloadMotoDTAsegMaterial(dr.getDriver(), STARTDATE, ENDDATE);
+
 
         List<ReportRowDto> rows = reader.read(Driver.DOWNLOAD_DIR, downloadStarted);
         System.out.println("Filas leídas: " + rows.size());
