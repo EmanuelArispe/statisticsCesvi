@@ -58,6 +58,7 @@ public class Management {
 
     // TABLE IDs
     private static final String TABLE_RESULTADOS        = "gvBusquedaPeritacion";
+    private static final String DIV_LOADER              = "divLoader";
 
     // SELECT value attributes
     private static final String PERITO_NOMBRE           = "ARISPE EMANUEL";
@@ -80,12 +81,29 @@ public class Management {
         fillDateInput(driver, wait, INPUT_FECHA_DESDE, startDate);
         fillDateInput(driver, wait, INPUT_FECHA_HASTA, endDate);
         clickCheckBox(driver, wait, CHK_TERCERO);
-
+        clickCheckBox(driver, wait, CHK_NORMAL);
+        clickCheckBox(driver, wait, CHK_PPT);
+        clickCheckBox(driver, wait, CHK_PTE);
         selectByValue(driver, wait, DDL_AMPLIACION, SIN_AMPLIACION_VALUE);
-        //selectByValue(driver, wait, DDL_AMPLIACION, SIN_AMPLIACION_VALUE);
+        clickButton(driver, wait, CHK_AUTO);
+        clickButton(driver, wait, CHK_CAMION);
+        clickCheckBox(driver, wait, CHK_ROTURA_CRISTAL);
+        clickCheckBox(driver, wait, CHK_ROBO_AP);
+        clickCheckBox(driver, wait, CHK_ROBO_PAR);
+        clickCheckBox(driver, wait, CHK_ROBO_RUE);
+        clickCheckBox(driver, wait, CHK_INCENDIO);
+        clickCheckBox(driver, wait, CHK_PERIT_FOTO);
+        clickCheckBox(driver, wait, CHK_GRANIZO);
+        clickCheckBox(driver, wait, CHK_INUNDACION);
+        clickCheckBox(driver, wait, CHK_ORDEN_RAPI);
+        clickCheckBox(driver, wait, CHK_PERIT_REMOTA);
         clickButton(driver, wait, BTN_BUSCAR);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(TABLE_RESULTADOS))); // para esperar a que cargue la table y poder descargarla
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(TABLE_RESULTADOS)));
         clickButton(driver, wait, BTN_DESCARGAR);
+    }
+
+    private void waitForLoader(WebDriverWait wait) {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id(DIV_LOADER)));
     }
 
     private void scrollTo(WebDriver driver, WebElement element) {
@@ -93,6 +111,7 @@ public class Management {
     }
 
     private void selectByText(WebDriver driver, WebDriverWait wait, String id, String text) {
+        waitForLoader(wait);
         WebElement element = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.id(id))
         );
@@ -122,6 +141,7 @@ public class Management {
     }
 
     private void fillDateInput(WebDriver driver, WebDriverWait wait, String id, String value) {
+        waitForLoader(wait);
         WebElement dateElement = wait.until(
                 ExpectedConditions.elementToBeClickable(By.id(id))
         );
@@ -131,14 +151,16 @@ public class Management {
     }
 
     private void clickCheckBox(WebDriver driver, WebDriverWait wait, String id) {
+        waitForLoader(wait);
         WebElement checkbox = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.id(id))
         );
         scrollTo(driver, checkbox);
-            checkbox.click();
+        checkbox.click();
     }
 
     private void clickButton(WebDriver driver, WebDriverWait wait, String id) {
+        waitForLoader(wait);
         WebElement button = wait.until(
                 ExpectedConditions.elementToBeClickable(By.id(id))
         );
@@ -146,8 +168,8 @@ public class Management {
         button.click();
     }
 
-    // selecciona por atributo value, más robusto que buscar por texto visible
     private void selectByValue(WebDriver driver, WebDriverWait wait, String id, String value) {
+        waitForLoader(wait);
         WebElement element = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.id(id))
         );
