@@ -81,8 +81,8 @@ public class Management {
         fillDateInput(driver, wait, INPUT_FECHA_DESDE, startDate);
         fillDateInput(driver, wait, INPUT_FECHA_HASTA, endDate);
         clickCheckBox(driver, wait, CHK_TERCERO);
-        clickCheckBox(driver, wait, CHK_NORMAL);
         clickCheckBox(driver, wait, CHK_PPT);
+        clickCheckBox(driver, wait, CHK_NORMAL);
         clickCheckBox(driver, wait, CHK_PTE);
         selectByValue(driver, wait, DDL_AMPLIACION, SIN_AMPLIACION_VALUE);
         clickButton(driver, wait, CHK_AUTO);

@@ -26,6 +26,12 @@ public class App
         List<ReportRowDto> rows = reader.read(Driver.DOWNLOAD_DIR, downloadStarted);
         System.out.println("Filas leídas: " + rows.size());
 
+        List<PeritacionDto> peritaciones = rows.stream()
+                .map(row -> PeritacionMapper.map(row, true, false, "Sin Tipo", "moto"))
+                .toList();
+
+        peritaciones.forEach(System.out::println);
+
         //dr.tearDown();
     }
 }
