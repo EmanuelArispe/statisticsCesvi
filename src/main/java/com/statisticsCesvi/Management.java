@@ -12,104 +12,128 @@ import java.time.Duration;
 
 public class Management {
 
-    private static final String CHK_ASEGURADO           = "chkAseguradoList_0";
-    private static final String CHK_TERCERO             = "chkAseguradoList_1";
+    protected static final String CHK_ASEGURADO           = "chkAseguradoList_0";
+    protected static final String CHK_TERCERO             = "chkAseguradoList_1";
 
     // CHECK TIPO INFORME
-    private static final String CHK_NORMAL              = "chkResultadoPeritacionList_0";
-    private static final String CHK_PPT                 = "chkResultadoPeritacionList_1";
-    private static final String CHK_PTE                 = "chkResultadoPeritacionList_2";
+    protected static final String CHK_NORMAL              = "chkResultadoPeritacionList_0";
+    protected static final String CHK_PPT                 = "chkResultadoPeritacionList_1";
+    protected static final String CHK_PTE                 = "chkResultadoPeritacionList_2";
 
     // CHECK TIPO VEHICULO
-    private static final String CHK_AUTO                = "chkTipoVehiculoList_0";
-    private static final String CHK_CAMION              = "chkTipoVehiculoList_1";
-    private static final String CHK_MOTO                = "chkTipoVehiculoList_2";
+    protected static final String CHK_AUTO                = "chkTipoVehiculoList_0";
+    protected static final String CHK_CAMION              = "chkTipoVehiculoList_1";
+    protected static final String CHK_MOTO                = "chkTipoVehiculoList_2";
 
     // CHECK TIPO PERITACION
-    private static final String CHK_SIN_TIPO                = "chkTipoPeritacionList_10";
-    private static final String CHK_ROTURA_CRISTAL          = "chkTipoPeritacionList_0";
-    private static final String CHK_ROBO_AP                 = "chkTipoPeritacionList_1"; // Roba aparecido
-    private static final String CHK_ROBO_PAR                = "chkTipoPeritacionList_2"; // Robo parcial
-    private static final String CHK_ROBO_RUE                = "chkTipoPeritacionList_3"; // Robo Rueda
-    private static final String CHK_INCENDIO                = "chkTipoPeritacionList_4";
-    private static final String CHK_PERIT_FOTO              = "chkTipoPeritacionList_5";
-    private static final String CHK_GRANIZO                 = "chkTipoPeritacionList_6";
-    private static final String CHK_INUNDACION              = "chkTipoPeritacionList_7";
-    private static final String CHK_ORDEN_RAPI              = "chkTipoPeritacionList_8";
-    private static final String CHK_PERIT_REMOTA            = "chkTipoPeritacionList_9";
+    protected static final String CHK_SIN_TIPO            = "chkTipoPeritacionList_10";
+    protected static final String CHK_ROTURA_CRISTAL      = "chkTipoPeritacionList_0";
+    protected static final String CHK_ROBO_AP             = "chkTipoPeritacionList_1";
+    protected static final String CHK_ROBO_PAR            = "chkTipoPeritacionList_2";
+    protected static final String CHK_ROBO_RUE            = "chkTipoPeritacionList_3";
+    protected static final String CHK_INCENDIO            = "chkTipoPeritacionList_4";
+    protected static final String CHK_PERIT_FOTO          = "chkTipoPeritacionList_5";
+    protected static final String CHK_GRANIZO             = "chkTipoPeritacionList_6";
+    protected static final String CHK_INUNDACION          = "chkTipoPeritacionList_7";
+    protected static final String CHK_ORDEN_RAPI          = "chkTipoPeritacionList_8";
+    protected static final String CHK_PERIT_REMOTA        = "chkTipoPeritacionList_9";
 
-    // SELECT AMPLIACION IDs y values
-    private static final String DDL_AMPLIACION          = "MainContent_ddlAmpliacion";
-    private static final String AMPLIACION_VALUE        = "1";
-    private static final String SIN_AMPLIACION_VALUE    = "0";
+    // SELECT AMPLIACION
+    protected static final String DDL_AMPLIACION          = "MainContent_ddlAmpliacion";
+    protected static final String AMPLIACION_VALUE        = "1";
+    protected static final String SIN_AMPLIACION_VALUE    = "0";
 
-    // SELECT CLEAS IDs y values
-    private static final String DDL_CLEAS          = "MainContent_ddlPeritacionCleas";
-    private static final String CLEAS_VALUE        = "1";
-    private static final String SIN_CLEAS_VALUE    = "0";
+    // SELECT CLEAS
+    protected static final String DDL_CLEAS               = "MainContent_ddlPeritacionCleas";
+    protected static final String CLEAS_VALUE             = "1";
+    protected static final String SIN_CLEAS_VALUE         = "0";
 
     // DATE INPUT IDs
-    private static final String INPUT_FECHA_DESDE       = "MainContent_txtFechaInformeDesde";
-    private static final String INPUT_FECHA_HASTA       = "MainContent_txtFechaInformeHasta";
+    protected static final String INPUT_FECHA_DESDE       = "MainContent_txtFechaInformeDesde";
+    protected static final String INPUT_FECHA_HASTA       = "MainContent_txtFechaInformeHasta";
 
     // BUTTON IDs
-    private static final String BTN_BUSCAR              = "btnBuscar";
-    private static final String BTN_DESCARGAR           = "btnExportarExcelBusqueda";
+    protected static final String BTN_BUSCAR              = "btnBuscar";
+    protected static final String BTN_DESCARGAR           = "btnExportarExcelBusqueda";
 
-    // TABLE IDs
-    private static final String TABLE_RESULTADOS        = "gvBusquedaPeritacion";
-    private static final String DIV_LOADER              = "divLoader";
+    // TABLE / LOADER IDs
+    protected static final String TABLE_RESULTADOS        = "gvBusquedaPeritacion";
+    private   static final String DIV_LOADER              = "divLoader";
 
     // SELECT value attributes
-    private static final String PERITO_NOMBRE           = "ARISPE EMANUEL";
-    private static final String GRUPO_VALUE             = "3666"; // Zona10-Chiappanni
-    private static final String PROVINCIA_VALUE         = "2"; // Buenos Aires
-    private static final String CIUDAD_VALUE            = "0"; // [Todas]
+    protected static final String PERITO_NOMBRE           = "ARISPE EMANUEL";
+    protected static final String GRUPO_VALUE             = "3666";
+    protected static final String PROVINCIA_VALUE         = "2";
+    protected static final String CIUDAD_VALUE            = "0";
 
     // SELECT IDs
-    private static final String DDL_PERITOS             = "lstPeritos";
-    private static final String DDL_GRUPOS              = "lstGrupoPeritos";
-    private static final String DDL_PROVINCIA           = "ddlProvincia";
-    private static final String DDL_LOCALIDAD           = "ddlLocalidad";
+    protected static final String DDL_PERITOS             = "lstPeritos";
+    protected static final String DDL_GRUPOS              = "lstGrupoPeritos";
+    protected static final String DDL_PROVINCIA           = "ddlProvincia";
+    protected static final String DDL_LOCALIDAD           = "ddlLocalidad";
 
-
-    public void downloadMotoDTAsegMaterial (WebDriver driver, String startDate, String endDate){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        managementGeneralConfig(driver,wait, startDate, endDate);
-        filterMotoDTAsegMaterial(driver,wait);
+    protected void resetToSearch(WebDriverWait wait) {
+        wait.until(ExpectedConditions.elementToBeClickable(
+                By.cssSelector("a[href='BusquedaPeritacion.aspx']"))).click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id(DDL_PERITOS)));
     }
 
-    private void managementGeneralConfig(WebDriver driver,WebDriverWait wait, String startDate, String endDate) {
-        selectByText(driver, wait, DDL_PERITOS,   PERITO_NOMBRE);
-        selectByValue(driver, wait, DDL_GRUPOS,   GRUPO_VALUE);
+    protected void generalConfig(WebDriver driver, WebDriverWait wait, String startDate, String endDate) {
+        selectByText(driver, wait, DDL_PERITOS,    PERITO_NOMBRE);
+        selectByValue(driver, wait, DDL_GRUPOS,    GRUPO_VALUE);
         selectByValue(driver, wait, DDL_PROVINCIA, PROVINCIA_VALUE);
         loadCity(driver);
         fillDateInput(driver, wait, INPUT_FECHA_DESDE, startDate);
         fillDateInput(driver, wait, INPUT_FECHA_HASTA, endDate);
     }
 
-    // Filtro Motos, Aseguradas, Danios Materiales y DT
-    private void filterMotoDTAsegMaterial(WebDriver driver,WebDriverWait wait){
-        clickCheckBox(driver, wait, CHK_TERCERO);
-        clickCheckBox(driver, wait, CHK_PPT);
-        clickCheckBox(driver, wait, CHK_NORMAL);
-        clickCheckBox(driver, wait, CHK_PTE);
-        selectByValue(driver, wait, DDL_AMPLIACION, SIN_AMPLIACION_VALUE);
-        clickButton(driver, wait, CHK_AUTO);
-        clickButton(driver, wait, CHK_CAMION);
-        clickCheckBox(driver, wait, CHK_ROTURA_CRISTAL);
-        clickCheckBox(driver, wait, CHK_ROBO_AP);
-        clickCheckBox(driver, wait, CHK_ROBO_PAR);
-        clickCheckBox(driver, wait, CHK_ROBO_RUE);
-        clickCheckBox(driver, wait, CHK_INCENDIO);
-        clickCheckBox(driver, wait, CHK_PERIT_FOTO);
-        clickCheckBox(driver, wait, CHK_GRANIZO);
-        clickCheckBox(driver, wait, CHK_INUNDACION);
-        clickCheckBox(driver, wait, CHK_ORDEN_RAPI);
-        clickCheckBox(driver, wait, CHK_PERIT_REMOTA);
-        clickButton(driver, wait, BTN_BUSCAR);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(TABLE_RESULTADOS)));
-        clickButton(driver, wait, BTN_DESCARGAR);
+    protected void selectByText(WebDriver driver, WebDriverWait wait, String id, String text) {
+        waitForLoader(wait);
+        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(id)));
+        scrollTo(driver, element);
+        new Select(element).selectByVisibleText(text);
+    }
+
+    protected void selectByValue(WebDriver driver, WebDriverWait wait, String id, String value) {
+        waitForLoader(wait);
+        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(id)));
+        scrollTo(driver, element);
+        new Select(element).selectByValue(value);
+    }
+
+    protected void fillDateInput(WebDriver driver, WebDriverWait wait, String id, String value) {
+        waitForLoader(wait);
+        WebElement dateElement = wait.until(ExpectedConditions.elementToBeClickable(By.id(id)));
+        scrollTo(driver, dateElement);
+        dateElement.clear();
+        dateElement.sendKeys(value);
+    }
+
+    protected void clickCheckBox(WebDriver driver, WebDriverWait wait, String id) {
+        waitForLoader(wait);
+        WebElement checkbox = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(id)));
+        scrollTo(driver, checkbox);
+        checkbox.click();
+    }
+
+    protected void clickButton(WebDriver driver, WebDriverWait wait, String id) {
+        waitForLoader(wait);
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.id(id)));
+        scrollTo(driver, button);
+        button.click();
+    }
+
+    protected void loadCity(WebDriver driver) {
+        WebDriverWait waitLocalidad = new WebDriverWait(driver, Duration.ofSeconds(10));
+        waitLocalidad.until(driver1 -> {
+            Select localidadSelect = new Select(driver1.findElement(By.id(DDL_LOCALIDAD)));
+            return localidadSelect.getOptions().stream()
+                    .anyMatch(option -> option.getAttribute("value").equals(CIUDAD_VALUE));
+        });
+        WebElement localidadElement = waitLocalidad.until(
+                ExpectedConditions.presenceOfElementLocated(By.id(DDL_LOCALIDAD)));
+        scrollTo(driver, localidadElement);
+        new Select(localidadElement).selectByValue(CIUDAD_VALUE);
     }
 
     private void waitForLoader(WebDriverWait wait) {
@@ -117,75 +141,7 @@ public class Management {
     }
 
     private void scrollTo(WebDriver driver, WebElement element) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth', block:'center'});", element);
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({behavior:'smooth', block:'center'});", element);
     }
-
-    private void selectByText(WebDriver driver, WebDriverWait wait, String id, String text) {
-        waitForLoader(wait);
-        WebElement element = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.id(id))
-        );
-        scrollTo(driver, element);
-        new Select(element).selectByVisibleText(text);
-    }
-
-    private void loadCity(WebDriver driver) {
-        WebDriverWait waitLocalidad = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        waitLocalidad.until(driver1 -> {
-            Select localidadSelect = new Select(
-                    driver1.findElement(By.id(DDL_LOCALIDAD))
-            );
-
-            return localidadSelect.getOptions()
-                    .stream()
-                    .anyMatch(option ->
-                            option.getAttribute("value").equals(CIUDAD_VALUE));
-        });
-
-        WebElement localidadElement = waitLocalidad.until(
-                ExpectedConditions.presenceOfElementLocated(By.id(DDL_LOCALIDAD))
-        );
-        scrollTo(driver, localidadElement);
-        new Select(localidadElement).selectByValue(CIUDAD_VALUE);
-    }
-
-    private void fillDateInput(WebDriver driver, WebDriverWait wait, String id, String value) {
-        waitForLoader(wait);
-        WebElement dateElement = wait.until(
-                ExpectedConditions.elementToBeClickable(By.id(id))
-        );
-        scrollTo(driver, dateElement);
-        dateElement.clear();
-        dateElement.sendKeys(value);
-    }
-
-    private void clickCheckBox(WebDriver driver, WebDriverWait wait, String id) {
-        waitForLoader(wait);
-        WebElement checkbox = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.id(id))
-        );
-        scrollTo(driver, checkbox);
-        checkbox.click();
-    }
-
-    private void clickButton(WebDriver driver, WebDriverWait wait, String id) {
-        waitForLoader(wait);
-        WebElement button = wait.until(
-                ExpectedConditions.elementToBeClickable(By.id(id))
-        );
-        scrollTo(driver, button);
-        button.click();
-    }
-
-    private void selectByValue(WebDriver driver, WebDriverWait wait, String id, String value) {
-        waitForLoader(wait);
-        WebElement element = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.id(id))
-        );
-        scrollTo(driver, element);
-        new Select(element).selectByValue(value);
-    }
-
 }
-
