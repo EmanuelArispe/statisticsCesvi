@@ -6,7 +6,7 @@ public class App
 {
     private static final String URL = "https://www.sistema-orion.com/Portal/Views/Login.aspx";
     private static final String USERNAME = "35418187";
-    private static final String PASSWORD = "35Em@.!418187";
+    private static final String PASSWORD = "Mic@35418187";
     private static final String STARTDATE = "01/06/2026";
     private static final String ENDDATE = "30/06/2026";
 
