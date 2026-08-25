@@ -1,8 +1,11 @@
 package com.statisticsCesvi;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class PeritacionDto {
+
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     private String siniestro;
     private LocalDate fechainforme;
@@ -144,4 +147,45 @@ public class PeritacionDto {
 
     public Boolean getOrdencompra() { return ordencompra; }
     public void setOrdencompra(Boolean ordencompra) { this.ordencompra = ordencompra; }
+
+    @Override
+    public String toString() {
+        return "PeritacionDto{" +
+            "siniestro=" + siniestro +
+            ", fechainforme=" + (fechainforme != null ? fechainforme.format(DATE_FORMAT) : null) +
+            ", fechasiniestro=" + (fechasiniestro != null ? fechasiniestro.format(DATE_FORMAT) : null) +
+            ", asegurado=" + asegurado +
+            ", cleas=" + cleas +
+            ", tipo=" + tipo +
+            ", danio=" + danio +
+            ", vehiculo=" + vehiculo +
+            ", anio=" + anio +
+            ", patente=" + patente +
+            ", provincia=" + provincia +
+            ", localidad=" + localidad +
+            ", direccion=" + direccion +
+            ", totalperitadopesos=" + totalperitadopesos +
+            ", totalreparacionpesos=" + totalreparacionpesos +
+            ", dtnormal=" + dtnormal +
+            ", manodeobrapesos=" + manodeobrapesos +
+            ", repuestospesos=" + repuestospesos +
+            ", matpinturapesos=" + matpinturapesos +
+            ", variospesos=" + variospesos +
+            ", chapapesos=" + chapapesos +
+            ", mecanicapesos=" + mecanicapesos +
+            ", pinturapesos=" + pinturapesos +
+            ", elecpesos=" + elecpesos +
+            ", totalhoras=" + totalhoras +
+            ", chapahoras=" + chapahoras +
+            ", mecanicahoras=" + mecanicahoras +
+            ", pinturahoras=" + pinturahoras +
+            ", elechoras=" + elechoras +
+            ", titular=" + titular +
+            ", poliza=" + poliza +
+            ", taller=" + taller +
+            ", cuit=" + cuit +
+            ", ordentrabajo=" + ordentrabajo +
+            ", ordencompra=" + ordencompra +
+            '}';
+    }
 }
