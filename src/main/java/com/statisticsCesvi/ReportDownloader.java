@@ -18,21 +18,28 @@ public class ReportDownloader extends Management {
 
     private void download(WebDriver driver, String startDate, String endDate, String aseguradoExcluido,
                            boolean dt, String vehiculo, String peritacion, String cleasValue) {
+        download(driver, startDate, endDate, aseguradoExcluido, dt, vehiculo, peritacion, cleasValue,
+                SIN_AMPLIACION_VALUE);
+    }
+
+    private void download(WebDriver driver, String startDate, String endDate, String aseguradoExcluido,
+                           boolean dt, String vehiculo, String peritacion, String cleasValue,
+                           String ampliacionValue) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         resetToSearch(wait);
         generalConfig(driver, wait, startDate, endDate);
-        applyFilters(driver, wait, aseguradoExcluido, dt, vehiculo, peritacion, cleasValue);
+        applyFilters(driver, wait, aseguradoExcluido, dt, vehiculo, peritacion, cleasValue, ampliacionValue);
     }
 
     private void applyFilters(WebDriver driver, WebDriverWait wait, String aseguradoExcluido, boolean dt,
-                               String vehiculo, String peritacion, String cleasValue) {
+                               String vehiculo, String peritacion, String cleasValue, String ampliacionValue) {
         clickCheckBox(driver, wait, aseguradoExcluido);
         if (dt) {
             clickCheckBox(driver, wait, CHK_PPT);
             clickCheckBox(driver, wait, CHK_NORMAL);
             clickCheckBox(driver, wait, CHK_PTE);
         }
-        selectByValue(driver, wait, DDL_AMPLIACION, SIN_AMPLIACION_VALUE);
+        selectByValue(driver, wait, DDL_AMPLIACION, ampliacionValue);
         for (String v : VEHICULOS) {
             if (!v.equals(vehiculo)) {
                 clickButton(driver, wait, v);
@@ -214,5 +221,79 @@ public class ReportDownloader extends Management {
     // Camiones, Terceros, Sin Tipo Asignado
     public void downloadCamionTerceros(WebDriver driver, String startDate, String endDate) {
         download(driver, startDate, endDate, CHK_ASEGURADO, false, CHK_CAMION, CHK_SIN_TIPO, SIN_CLEAS_VALUE);
+    }
+
+    // Autos, Aseguradas, Sin Tipo Asignado (Danio Parcial), Solo Ampliacion
+    public void downloadAutoAsegDanioParcialAmpliacion(WebDriver driver, String startDate, String endDate) {
+        download(driver, startDate, endDate, CHK_TERCERO, false, CHK_AUTO, CHK_SIN_TIPO, SIN_CLEAS_VALUE,
+                AMPLIACION_VALUE);
+    }
+
+    // Autos, Aseguradas, Sin Tipo Asignado (Danio Parcial), Solo Cleas, Solo Ampliacion
+    public void downloadAutoAsegDanioParcialCleasAmpliacion(WebDriver driver, String startDate, String endDate) {
+        download(driver, startDate, endDate, CHK_TERCERO, false, CHK_AUTO, CHK_SIN_TIPO, CLEAS_VALUE,
+                AMPLIACION_VALUE);
+    }
+
+    // Autos, Aseguradas, Incendio Parcial, Solo Ampliacion
+    public void downloadAutoAsegIncendioParcialAmpliacion(WebDriver driver, String startDate, String endDate) {
+        download(driver, startDate, endDate, CHK_TERCERO, false, CHK_AUTO, CHK_INCENDIO, SIN_CLEAS_VALUE,
+                AMPLIACION_VALUE);
+    }
+
+    // Autos, Aseguradas, Granizo, Solo Ampliacion
+    public void downloadAutoAsegGranizoAmpliacion(WebDriver driver, String startDate, String endDate) {
+        download(driver, startDate, endDate, CHK_TERCERO, false, CHK_AUTO, CHK_GRANIZO, SIN_CLEAS_VALUE,
+                AMPLIACION_VALUE);
+    }
+
+    // Autos, Aseguradas, Robo Parcial, Solo Ampliacion
+    public void downloadAutoAsegRoboParcialAmpliacion(WebDriver driver, String startDate, String endDate) {
+        download(driver, startDate, endDate, CHK_TERCERO, false, CHK_AUTO, CHK_ROBO_PAR, SIN_CLEAS_VALUE,
+                AMPLIACION_VALUE);
+    }
+
+    // Camiones, Aseguradas, Sin Tipo Asignado (Danio Parcial), Solo Ampliacion
+    public void downloadCamionAsegDanioParcialAmpliacion(WebDriver driver, String startDate, String endDate) {
+        download(driver, startDate, endDate, CHK_TERCERO, false, CHK_CAMION, CHK_SIN_TIPO, SIN_CLEAS_VALUE,
+                AMPLIACION_VALUE);
+    }
+
+    // Camiones, Aseguradas, Incendio Parcial, Solo Ampliacion
+    public void downloadCamionAsegIncendioParcialAmpliacion(WebDriver driver, String startDate, String endDate) {
+        download(driver, startDate, endDate, CHK_TERCERO, false, CHK_CAMION, CHK_INCENDIO, SIN_CLEAS_VALUE,
+                AMPLIACION_VALUE);
+    }
+
+    // Camiones, Aseguradas, Granizo, Solo Ampliacion
+    public void downloadCamionAsegGranizoAmpliacion(WebDriver driver, String startDate, String endDate) {
+        download(driver, startDate, endDate, CHK_TERCERO, false, CHK_CAMION, CHK_GRANIZO, SIN_CLEAS_VALUE,
+                AMPLIACION_VALUE);
+    }
+
+    // Camiones, Aseguradas, Robo Parcial, Solo Ampliacion
+    public void downloadCamionAsegRoboParcialAmpliacion(WebDriver driver, String startDate, String endDate) {
+        download(driver, startDate, endDate, CHK_TERCERO, false, CHK_CAMION, CHK_ROBO_PAR, SIN_CLEAS_VALUE,
+                AMPLIACION_VALUE);
+    }
+
+    // Motos, Aseguradas, Sin Tipo Asignado, Solo Ampliacion
+    public void downloadMotoAsegSinTipoAmpliacion(WebDriver driver, String startDate, String endDate) {
+        download(driver, startDate, endDate, CHK_TERCERO, false, CHK_MOTO, CHK_SIN_TIPO, null, AMPLIACION_VALUE);
+    }
+
+    // Motos, Aseguradas, Incendio Parcial, Solo Ampliacion
+    public void downloadMotoAsegIncendioParcialAmpliacion(WebDriver driver, String startDate, String endDate) {
+        download(driver, startDate, endDate, CHK_TERCERO, false, CHK_MOTO, CHK_INCENDIO, null, AMPLIACION_VALUE);
+    }
+
+    // Motos, Aseguradas, Granizo, Solo Ampliacion
+    public void downloadMotoAsegGranizoAmpliacion(WebDriver driver, String startDate, String endDate) {
+        download(driver, startDate, endDate, CHK_TERCERO, false, CHK_MOTO, CHK_GRANIZO, null, AMPLIACION_VALUE);
+    }
+
+    // Motos, Aseguradas, Robo Parcial, Solo Ampliacion
+    public void downloadMotoAsegRoboParcialAmpliacion(WebDriver driver, String startDate, String endDate) {
+        download(driver, startDate, endDate, CHK_TERCERO, false, CHK_MOTO, CHK_ROBO_PAR, null, AMPLIACION_VALUE);
     }
 }
